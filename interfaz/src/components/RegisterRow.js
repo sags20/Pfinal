@@ -1,15 +1,18 @@
 import React from "react";
 
-class RegisterRow extends React.Component{
+class IDERow extends React.Component{
     render(){
-        let student = this.props.student;
+        let IDE = this.props.student;
 
         return(
             <tr className="table-active">
-                <th scope='row'>{student.carnet}</th>
-                <td>{student.schedule}</td>
-                <td>{student.datetime.toLocaleString()}</td>
-                <td>{parseLate(student.isLate)}</td>
+                <th scope='row'>{IDE.nombre}</th>
+                <td>{IDE.desarrollador}</td>
+                <td>{IDE.lanzamiento}</td>
+                <td>{IDE.programado}</td>
+                <td>{IDE.SO}</td>
+
+
                 <td>
                     <button 
                         type="button" 
@@ -25,11 +28,6 @@ class RegisterRow extends React.Component{
     }
 }
 
-const parseLate= value=>{
-    if(value){
-        return "Tardísimo"
-    }
-    return "A tiempo"
-}
 
-export default RegisterRow;
+
+export default IDERow;
