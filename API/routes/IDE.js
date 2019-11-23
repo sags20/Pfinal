@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var userController = require('../controllers/UserController')
+var IDEController = require('../controllers/IDEController')
 
 /* GET users listing. */
-router.get('/:username', userController.getOne);
-router.get('/', userController.getAll);
+router.get('/:nombre', IDEController.getOne);
+router.get('/', IDEController.getAll);
 
-router.post('/',userController.register);
-router.put('/:username', userController.update);
-router.delete('/:username',userController.delete);
+router.post('/',IDEController.register);
+router.put('/:nombre', IDEController.update);
+router.delete('/:nombre',IDEControlleru.delete);
 
 module.exports = router;

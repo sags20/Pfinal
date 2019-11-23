@@ -1,16 +1,16 @@
-var User = require('../models/IDE');
+var IDE = require('../models/IDE');
 var debug = require('debug')('blog:ide_controller');
 
-// Search a one user y database
+// Search 
 module.exports.getOne = (req, res, next) => {
-    debug("Search User", req.params);
+    debug("Search ", req.params);
     User.findOne({
-            username: req.params.username
-        }, "-password -login_count")
-        .then((foundUser) => {
-            debug("Found User", foundUser);
-            if (foundUser)
-                return res.status(200).json(foundUser);
+            nombre: req.params.nombre
+        })
+        .then((foundIDE) => {
+            debug("Found IDE", foundIDE);
+            if (foundIDE)
+                return res.status(200).json(foundIDE);
             else
                 return res.status(400).json(null)
         })
@@ -26,57 +26,57 @@ module.exports.getAll = (req, res, next) => {
     var sortProperty = req.query.sortby || "createdAt",
         sort = req.query.sort || "desc";
 
-    debug("Usert List", {
+    debug("IDE List", {
         size: perPage,
         page,
         sortby: sortProperty,
         sort
     });
 
-    User.find({}, "-password -login_count")
+    User.find({})
         .limit(perPage)
         .skip(perPage * page)
         .sort({
             [sortProperty]: sort
         })
-        .then((users) => {
-            debug("Found users", users);
-            return res.status(200).json(users)
+        .then((ides) => {
+            debug("Found IDE", ides);
+            return res.status(200).json(ides)
         }).catch(err => {
             next(err);
         });
 
 }
 
-// New User
+// New IDE
 
 module.exports.register = (req, res, next) => {
-    debug("New User", {
+    debug("New IDE", {
         body: req.body
     });
     User.findOne({
-            username: req.body.username
-        }, "-password -login_count")
-        .then((foundUser) => {
-            if (foundUser) {
-                debug("Usuario duplicado");
-                throw new Error(`Usuario duplicado ${req.body.username}`);
+            nombre: req.body.nombre
+        })
+        .then((foundIDE) => {
+            if (foundIDE) {
+                debug("IDE repetido");
+                throw new Error(`IDE repetido ${req.body.nombre}`);
             } else {
-                let newUser = new User({
-                    username: req.body.username,
-                    first_name: req.body.firts_name || "",
+                let newIDE = new IDE({
+                    nombre: req.body.nombre|| "",
+                    desarrollador: req.body.desarrollador || "",
                     last_name: req.body.last_name || "",
-                    email: req.body.email,
-                    password: req.body.password /*TODO: Modificar, hacer hash del password*/
+                    programado_en: req.body.programado_en || "",
+                    SO: req.body.SO || "",                   
                 });
-                return newUser.save();
+                return newIDE.save();
             }
-        }).then(user => {
+        }).then(ide => {
             return res
-                .header('Location', '/users/' + user.username)
+                .header('Location', '/ides/' + ide.nombre)
                 .status(201)
                 .json({
-                    _id: user._id
+                    nombre: ide.nombre
                 });
         }).catch(err => {
             next(err);
@@ -87,8 +87,8 @@ module.exports.register = (req, res, next) => {
 // Update user 
 
 module.exports.update = (req, res, next) => {
-    debug("Update user", {
-        username: req.params.username,
+    debug("Update IDE", {
+        nombre: req.params.nombre,
         ...req.body
     });
 
@@ -97,7 +97,7 @@ module.exports.update = (req, res, next) => {
     };
 
     User.findOneAndUpdate({
-            username: req.params.username
+            nombre: req.params.nombre
         }, update, {
             new: true
         })
@@ -113,11 +113,11 @@ module.exports.update = (req, res, next) => {
 
 module.exports.delete = (req, res, next) => {
 
-    debug("Delete user", {
-        username: req.params.username,
+    debug("Delete IDE", {
+        nombre: req.params.nombre,
     });
 
-    User.findOneAndDelete({username: req.params.username})
+    User.findOneAndDelete({nombre: req.params.nombre})
     .then((data) =>{
         if (data) res.status(200).json(data);
         else res.status(404).send();
