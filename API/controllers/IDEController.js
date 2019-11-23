@@ -4,7 +4,7 @@ var debug = require('debug')('blog:ide_controller');
 // Search 
 module.exports.getOne = (req, res, next) => {
     debug("Search ", req.params);
-    User.findOne({
+     IDE.findOne({
             nombre: req.params.nombre
         })
         .then((foundIDE) => {
@@ -33,7 +33,7 @@ module.exports.getAll = (req, res, next) => {
         sort
     });
 
-    User.find({})
+    IDE.find({})
         .limit(perPage)
         .skip(perPage * page)
         .sort({
@@ -54,7 +54,7 @@ module.exports.register = (req, res, next) => {
     debug("New IDE", {
         body: req.body
     });
-    User.findOne({
+    IDE.findOne({
             nombre: req.body.nombre
         })
         .then((foundIDE) => {
@@ -63,10 +63,10 @@ module.exports.register = (req, res, next) => {
                 throw new Error(`IDE repetido ${req.body.nombre}`);
             } else {
                 let newIDE = new IDE({
-                    nombre: req.body.nombre|| "",
+                    nombre: req.body.nombre || "",
                     desarrollador: req.body.desarrollador || "",
                     last_name: req.body.last_name || "",
-                    programado_en: req.body.programado_en || "",
+                    programado: req.body.programado || "",
                     SO: req.body.SO || "",                   
                 });
                 return newIDE.save();
@@ -96,7 +96,7 @@ module.exports.update = (req, res, next) => {
         ...req.body
     };
 
-    User.findOneAndUpdate({
+    IDE.findOneAndUpdate({
             nombre: req.params.nombre
         }, update, {
             new: true
@@ -117,7 +117,7 @@ module.exports.delete = (req, res, next) => {
         nombre: req.params.nombre,
     });
 
-    User.findOneAndDelete({nombre: req.params.nombre})
+    IDE.findOneAndDelete({nombre: req.params.nombre})
     .then((data) =>{
         if (data) res.status(200).json(data);
         else res.status(404).send();

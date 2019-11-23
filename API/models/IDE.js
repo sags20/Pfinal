@@ -2,7 +2,7 @@ const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 
-    var IDESchema = Schema({
+    var IdeSchema = Schema({
         nombre: {
             type: String,
             required: true,
@@ -10,8 +10,8 @@ const mongoose = require('mongoose'),
         },
         desarrollador:String,
         lanzamiento: String,
-         programado_en:String,
+         programado:String,
          SO:String
     });
     
-    module.exports = mongoose.model("IDE", IDESchema);
+    module.exports = mongoose.model("Ide", IdeSchema);
