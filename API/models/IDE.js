@@ -2,7 +2,7 @@ const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 
-    var IdeSchema = Schema({
+    var IDESchema = Schema({
         nombre: {
             type: String,
             required: true,
@@ -14,4 +14,4 @@ const mongoose = require('mongoose'),
          SO:String
     });
     
-    module.exports = mongoose.model("Ide", IdeSchema);
+    module.exports = mongoose.model("IDE", IDESchema);
