@@ -8,6 +8,6 @@ router.get('/', IDEController.getAll);
 
 router.post('/',IDEController.register);
 router.put('/:nombre', IDEController.update);
-router.delete('/:nombre',IDEControlleru.delete);
+router.delete('/:nombre',IDEController.delete);
 
 module.exports = router;
