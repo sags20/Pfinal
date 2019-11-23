@@ -6,32 +6,32 @@ class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            student_list:[],
+            IDE_list:[],
             id_counter:0
         }
     }
 
-    handleSubmit(student){
-        student._id = this.state.id_counter;
-        student.datetime = new Date();
+    handleSubmit(IDE){
+        IDE._id = this.state.id_counter;
+        
 
-        let buffer_list = this.state.student_list.slice();
+        let buffer_list = this.state.IDE_list.slice();
         this.setState({
-            student_list: buffer_list.concat([student]),
+            IDE_list: buffer_list.concat([IDE]),
             id_counter: this.state.id_counter + 1,
         })
     }
 
-    handleDelete(student){
-        let index = this.state.student_list.find(value=>{
-            return value._id === student._id;
+    handleDelete(IDE){
+        let index = this.state.IDE_list.find(value=>{
+            return value._id === IDE._id;
         })
 
-        let buffer_list = this.state.student_list.slice();
+        let buffer_list = this.state.IDE_list.slice();
         buffer_list.splice(index, 1);
 
         this.setState({
-            student_list: buffer_list
+            IDE_list: buffer_list
         });
     }
     
@@ -39,13 +39,13 @@ class App extends React.Component{
         return (
             <div className="container" style={{"marginTop":2+"em", "marginBottom":2+"em"}}>
                 <RegisterForm 
-                    onSubmit = {(student)=>{
-                        this.handleSubmit(student);
+                    onSubmit = {(IDE)=>{
+                        this.handleSubmit(IDE);
                     }}
                 />
                 <RegisterTable 
-                    list={this.state.student_list}
-                    onDelete={(student)=>this.handleDelete(student)}
+                    list={this.state.IDE_list}
+                    onDelete={(IDE)=>this.handleDelete(IDE)}
                     />
             </div>
         );
